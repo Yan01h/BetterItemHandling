@@ -1,1 +1,1 @@
-xcopy /Y "bin\Debug\netstandard2.1\QuickItemSwap*.dll" "C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\BepInEx\plugins"
+xcopy /Y "bin\Release\netstandard2.1\BetterItemHandling*.dll" "C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\BepInEx\plugins"
