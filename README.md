@@ -1,5 +1,7 @@
 # BetterItemHandling
 
+[![Thunderstore Version](https://img.shields.io/thunderstore/v/HydratedDragon/BetterItemHandling?style=for-the-badge)](https://thunderstore.io/c/lethal-company/p/HydratedDragon/BetterItemHandling/)
+
 A mod for Lethal Company that makes item handling easier. Primarily picking up items.
 
 # Features
@@ -16,7 +18,7 @@ drop all scrap, making dodging worms or lightings easier.
 ## Installation (Manual)
 
 1. Download [BepInEx](https://thunderstore.io/c/lethal-company/p/BepInEx/BepInExPack/) and install it
-2. Download this mod on Thunderstore or build it yourself
+2. Download this mod on [Thunderstore](https://thunderstore.io/c/lethal-company/p/HydratedDragon/BetterItemHandling/) or build it yourself
 3. Place the `BetterItemHandling.dll` in the `Lethal Company\BepInEx\plugins` folder
 3. Place the `Yan01h.BetterItemHandling.cfg` in the `Lethal Company\BepInEx\config` folder
 4. Run the game!
