@@ -3,6 +3,7 @@
 // MIT license
 
 using GameNetcodeStuff;
+using System.Reflection;
 
 namespace BetterItemHandling.Data
 {
@@ -12,5 +13,7 @@ namespace BetterItemHandling.Data
         internal static PlayerControllerB Controller { get; set; }
         // Player is currently holding a two handed object and needs to drop it
         internal static bool IsTwoHanded { get; set; }
+        // SwitchToItemSlot from PlayerControllerB is private, thats why we need this
+        internal static MethodInfo SwitchToItemSlot {  get; set; }
     }
 }
