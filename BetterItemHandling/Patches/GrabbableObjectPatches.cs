@@ -39,6 +39,13 @@ namespace BetterItemHandling.Patches
                 Plugin.Log.LogInfo("No space available! Dropping item...");
                 PlayerControllerData.Controller.DiscardHeldObject();
             }
+
+            // Reset PlayerControllerB.twoHanded only when the item picked up is also two handed,
+            // without this we wouldn't be able to pickup normal items aswell
+            if (!__instance.itemProperties.twoHanded)
+            {
+                PlayerControllerData.IsTwoHanded = false;
+            }
         }
     }
 }

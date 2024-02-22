@@ -5,7 +5,6 @@
 using BetterItemHandling.Data;
 using GameNetcodeStuff;
 using HarmonyLib;
-using System.Reflection;
 
 namespace BetterItemHandling.Patches
 {
@@ -36,6 +35,23 @@ namespace BetterItemHandling.Patches
         }
 
         /// <summary>
+        /// Reset twoHanded here or else we can change slots while twoHanded and thus pickup multiple
+        /// two handed items.
+        /// </summary>
+        /// <param name="__instance">PlayerControllerB instance</param>
+        [HarmonyPostfix]
+        [HarmonyPatch("BeginGrabObject")]
+        internal static void BeginGrabObjectPostfix(PlayerControllerB __instance)
+        {
+            if (PlayerControllerData.IsTwoHanded)
+            {
+                Plugin.Log.LogInfo("Item was two handed, reseting PlayerControllerB.twoHanded");
+                PlayerControllerData.IsTwoHanded = false;
+                __instance.twoHanded = true;
+            }
+        }
+
+        /// <summary>
         /// Reason for this patch is to override the cursor tooltip for when the inventory is full
         /// or for when we carry a two handed item.
         /// </summary>
@@ -44,10 +60,14 @@ namespace BetterItemHandling.Patches
         [HarmonyPatch("SetHoverTipAndCurrentInteractTrigger")]
         internal static void SetHoverTipAndCurrentInteractTriggerPostfix(PlayerControllerB __instance)
         {
-            if(__instance.cursorTip.text == "Inventory full!" ||
+            bool sprintPressed = IngamePlayerSettings.Instance.playerInput.actions.FindAction("Sprint", false).IsPressed();
+            if (__instance.cursorTip.text == "Inventory full!" ||
                 (__instance.cursorTip.text == "Grab : [E]" && __instance.twoHanded))
             {
                 __instance.cursorTip.text = "Swap : [E]";
+            }else if (sprintPressed && __instance.cursorTip.text == "Sell item : [E]")
+            {
+                __instance.cursorTip.text = "Sell All : [E]";
             }
         }
 
@@ -63,22 +83,18 @@ namespace BetterItemHandling.Patches
 
             if (__instance.ItemSlots[__instance.currentItemSlot] == null)
             {
-                // SwitchToItemSlot method to switch to desired slot that we want to drop.
-                // Afterwards we return to the old slot. This is a hacky way of doing it but it works
-                // for now.
-                MethodInfo switchMethod = typeof(PlayerControllerB).GetMethod("SwitchToItemSlot",
-                    BindingFlags.Instance | BindingFlags.NonPublic);
-
+                // Switch to desired slot that we want to drop. Afterwards we return to the old slot.
+                // This is a hacky way of doing it but it works for now.
                 int currentSlotIndex = __instance.currentItemSlot;
                 for (int i = 0; i < 4; i++)
                 {
                     GrabbableObject item = __instance.ItemSlots[i];
                     if (item != null && item.itemProperties.isScrap)
                     {
-                        switchMethod.Invoke(__instance, new object[] { i, null });
+                        PlayerControllerData.SwitchToItemSlot.Invoke(__instance, new object[] { i, null });
                         __instance.DiscardHeldObject();
                     }
-                    switchMethod.Invoke(__instance, new object[] { currentSlotIndex, null });
+                    PlayerControllerData.SwitchToItemSlot.Invoke(__instance, new object[] { currentSlotIndex, null });
                 }
             }
         }
