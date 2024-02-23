@@ -1,6 +1,7 @@
 # BetterItemHandling
 
-[![Thunderstore Version](https://img.shields.io/thunderstore/v/HydratedDragon/BetterItemHandling?style=for-the-badge)](https://thunderstore.io/c/lethal-company/p/HydratedDragon/BetterItemHandling/)
+[![Thunderstore Version](https://img.shields.io/thunderstore/v/HydratedDragon/BetterItemHandling?style=for-the-badge)](https://thunderstore.io/c/lethal-company/p/HydratedDragon/BetterItemHandling/) ![Thunderstore Downloads](https://img.shields.io/thunderstore/dt/HydratedDragon/BetterItemHandling?style=for-the-badge)
+
 
 A mod for Lethal Company that makes item handling easier. Primarily picking up items.
 
