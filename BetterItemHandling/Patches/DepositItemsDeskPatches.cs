@@ -26,12 +26,13 @@ namespace BetterItemHandling.Patches
             if (!Plugin.ConfigAllowPlaceAllScrapOnDesk.Value) { return; }
 
             bool sprintPressed = IngamePlayerSettings.Instance.playerInput.actions.FindAction("Sprint", false).IsPressed();
-            if (sprintPressed && _slotIndex != 4)
+            int inventoryLength = PlayerControllerData.GetItemSlotCount();
+            if (sprintPressed && _slotIndex != inventoryLength)
             {
                 do
                 {
                     _slotIndex++;
-                    if (_slotIndex == 4)
+                    if (_slotIndex == inventoryLength)
                     {
                         return;
                     }

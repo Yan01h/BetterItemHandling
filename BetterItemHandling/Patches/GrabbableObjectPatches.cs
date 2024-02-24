@@ -20,9 +20,9 @@ namespace BetterItemHandling.Patches
             if(!__instance.grabbable) { return; }
 
             // Next free slot index
-            // 4 is hardcoded since mods like ReservedItemSlots can add aditional slots that cant carry items
             int nextFreeSlotIndex = -1;
-            for (int i = 0; i < 4; i++)
+            int inventoryLength = PlayerControllerData.GetItemSlotCount();
+            for (int i = 0; i < inventoryLength; i++)
             {
                 if (PlayerControllerData.Controller.ItemSlots[i] == null)
                 {
