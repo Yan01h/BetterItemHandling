@@ -24,6 +24,15 @@ So there's essentially no more need to manually drop and rearange items anymore.
 3. Place the `Yan01h.BetterItemHandling.cfg` in the `Lethal Company\BepInEx\config` folder
 4. Run the game!
 
+## Compatibility
+
+This mod interacts with the inventory and thus can sometimes cause issues with mods that change/expand
+the inventory.
+
+The mod was tested with:
+- The [ReservedItemSlot](https://thunderstore.io/c/lethal-company/p/FlipMods/ReservedItemSlotCore/) mods
+- [AdvancedCompany](https://thunderstore.io/c/lethal-company/p/PotatoePet/AdvancedCompany/)
+
 ## Found a bug?
 
 Click [here](https://github.com/Yan01h/BetterItemHandling) to get to the GitHub repo. Then create a issue with the `bug` label and try to describe as much as possible what happend.
@@ -31,3 +40,7 @@ Click [here](https://github.com/Yan01h/BetterItemHandling) to get to the GitHub 
 ## Changelog
 
 All changes can be found in the `CHANGELOG.md` file!
+
+## Testers
+
+- Paradox75831004

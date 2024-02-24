@@ -5,6 +5,7 @@
 using BetterItemHandling.Data;
 using GameNetcodeStuff;
 using HarmonyLib;
+using TMPro;
 
 namespace BetterItemHandling.Patches
 {
@@ -30,7 +31,7 @@ namespace BetterItemHandling.Patches
             }
             else
             {
-                PlayerControllerData.IsTwoHanded= false;
+                PlayerControllerData.IsTwoHanded = false;
             }
         }
 
@@ -65,7 +66,8 @@ namespace BetterItemHandling.Patches
                 (__instance.cursorTip.text == "Grab : [E]" && __instance.twoHanded))
             {
                 __instance.cursorTip.text = "Swap : [E]";
-            }else if (sprintPressed && __instance.cursorTip.text == "Sell item : [E]")
+            }
+            else if (sprintPressed && __instance.cursorTip.text == "Sell item : [E]")
             {
                 __instance.cursorTip.text = "Sell All : [E]";
             }
@@ -79,14 +81,15 @@ namespace BetterItemHandling.Patches
         [HarmonyPatch("Discard_performed")]
         internal static void Discard_performedPostfix(PlayerControllerB __instance)
         {
-            if(!Plugin.ConfigAllowDropAllScrap.Value) { return; }
+            if (!Plugin.ConfigAllowDropAllScrap.Value || !__instance.isPlayerControlled) { return; }
 
             if (__instance.ItemSlots[__instance.currentItemSlot] == null)
             {
                 // Switch to desired slot that we want to drop. Afterwards we return to the old slot.
                 // This is a hacky way of doing it but it works for now.
                 int currentSlotIndex = __instance.currentItemSlot;
-                for (int i = 0; i < 4; i++)
+                int inventoryLength = PlayerControllerData.GetItemSlotCount(__instance);
+                for (int i = 0; i < inventoryLength; i++)
                 {
                     GrabbableObject item = __instance.ItemSlots[i];
                     if (item != null && item.itemProperties.isScrap)
@@ -94,8 +97,8 @@ namespace BetterItemHandling.Patches
                         PlayerControllerData.SwitchToItemSlot.Invoke(__instance, new object[] { i, null });
                         __instance.DiscardHeldObject();
                     }
-                    PlayerControllerData.SwitchToItemSlot.Invoke(__instance, new object[] { currentSlotIndex, null });
                 }
+                PlayerControllerData.SwitchToItemSlot.Invoke(__instance, new object[] { currentSlotIndex, null });
             }
         }
     }

@@ -20,7 +20,7 @@ namespace BetterItemHandling
     {
         private const string ModGUID = "Yan01h.BetterItemHandling";
         private const string ModName = "BetterItemHandling";
-        private const string ModVersion = "1.1.0";
+        private const string ModVersion = "1.1.1";
 
         // Main logger used by this plugin
         public static ManualLogSource Log {  get; private set; }
