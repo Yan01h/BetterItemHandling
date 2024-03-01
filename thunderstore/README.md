@@ -7,8 +7,8 @@ A mod for Lethal Company that makes item handling easier. Primarily picking up i
 - Making it possible to swap the current item in hand with one on the ground without dropping the item
 first. The same applies to when you are carrying a two handed item.
 
-- Its also possible to press g (or whatever bind you have to drop an item) on a empty slot to instantly
-drop all scrap, making dodging worms or lightings easier.  
+- Its also possible to double press g (or whatever bind you have to drop an item) to instantly
+drop all scrap, making dodging worms or lighting strikes easier.  
 **This can be turned of in the config**
 
 - You can place all scrap instantly onto the deposit desk by holding you sprint key.  

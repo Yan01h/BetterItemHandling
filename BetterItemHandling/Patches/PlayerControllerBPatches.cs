@@ -5,13 +5,16 @@
 using BetterItemHandling.Data;
 using GameNetcodeStuff;
 using HarmonyLib;
-using TMPro;
+using UnityEngine;
 
 namespace BetterItemHandling.Patches
 {
     [HarmonyPatch(typeof(PlayerControllerB))]
     internal class PlayerControllerBPatches
     {
+        private static bool _discardPressedFirst = false;
+        private static float _discardPressedLast = 0;
+
         /// <summary>
         /// Gets called whenever we try to interact with something (pressing e).
         /// </summary>
@@ -83,7 +86,7 @@ namespace BetterItemHandling.Patches
         {
             if (!Plugin.ConfigAllowDropAllScrap.Value || !__instance.isPlayerControlled) { return; }
 
-            if (__instance.ItemSlots[__instance.currentItemSlot] == null)
+            if (ShouldDropAll(__instance))
             {
                 // Switch to desired slot that we want to drop. Afterwards we return to the old slot.
                 // This is a hacky way of doing it but it works for now.
@@ -100,6 +103,29 @@ namespace BetterItemHandling.Patches
                 }
                 PlayerControllerData.SwitchToItemSlot.Invoke(__instance, new object[] { currentSlotIndex, null });
             }
+        }
+
+        private static bool ShouldDropAll(PlayerControllerB controller)
+        {
+            if (!Plugin.ConfigDropAllRequiresDoublePress.Value &&
+                controller.ItemSlots[controller.currentItemSlot] == null)
+                return true;
+
+            if (_discardPressedFirst)
+            {
+                if (Time.time - _discardPressedLast <= Plugin.ConfigDoublePressTimeWindow.Value)
+                {
+                    _discardPressedFirst = false;
+                    return true;
+                }
+            }
+            else
+            {
+                _discardPressedFirst = true;
+            }
+            _discardPressedLast = Time.time;
+
+            return false;
         }
     }
 }
